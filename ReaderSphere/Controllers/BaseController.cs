@@ -7,7 +7,7 @@ namespace ReaderSphere.Controllers
     public class ControllerRouteTemplateAttribute : Attribute, IRouteTemplateProvider
     {
         public string Template => "api/[controller]";
-        public int? Order => 2;
+        public int? Order => 1 ;
         public string Name { get; set; }
     }
     public class BaseController<T> : ControllerBase

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataAccess
+namespace DataAccess.Repositories
 {
     public interface IGenericReadersphereRepository<T> where T : class
     {

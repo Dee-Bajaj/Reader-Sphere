@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DataAccess;
+using DataAccess.Models;
+using DataAccess.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using ProjectSettings;
 
 namespace ReaderSphere
 {
@@ -29,6 +25,9 @@ namespace ReaderSphere
             services.AddSingleton<IGenericReadersphereRepository<Author>, ReaderDataRepository<Author>>();
             services.AddSingleton<IGenericReadersphereRepository<BookAuthor>, ReaderDataRepository<BookAuthor>>();
             services.AddSingleton<IGenericReadersphereRepository<UserReview>, ReaderDataRepository<UserReview>>();
+            services.AddSingleton<IConnections,Connections>();
+            services.AddSingleton<ReaderSphereContext>();
+            services.AddHealthChecks().AddCheck<DBHealthCheckProvider>("Database health check");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,6 +45,7 @@ namespace ReaderSphere
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHealthChecks("");
                 endpoints.MapControllerRoute( 
                     name: "default",
                     pattern : "{controller}/{action}/{id?}"

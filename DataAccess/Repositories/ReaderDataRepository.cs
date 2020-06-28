@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DataAccess
+namespace DataAccess.Repositories
 {
     public class ReaderDataRepository<T> : IGenericReadersphereRepository<T> where T : class
     {
-        private ReaderSphereContext  _context = null;
+        private readonly ReaderSphereContext  _context;
         private DbSet<T> _dbSet = null;
-        public ReaderDataRepository()
+        public ReaderDataRepository(ReaderSphereContext readerSphereContext)
         {
-            _context = new ReaderSphereContext();
+            _context = readerSphereContext;
             _dbSet = _context.Set<T>();
         }
         public void Add(T obj)

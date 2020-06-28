@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DataAccess
+﻿namespace DataAccess.Models
 {
     public partial class UserReview
     {

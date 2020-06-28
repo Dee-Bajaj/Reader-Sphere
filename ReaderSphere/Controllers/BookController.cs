@@ -1,4 +1,5 @@
-﻿using DataAccess;
+﻿using DataAccess.Models;
+using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ReaderSphere.Controllers
