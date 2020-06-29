@@ -1,7 +1,11 @@
 ﻿using DataAccess.Models;
 using DataAccess.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 using ProjectSettings;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ReaderSphere.Controllers
 {
@@ -20,18 +24,28 @@ namespace ReaderSphere.Controllers
         [HttpGet]
         [Route("~/api")]
         [Route("GetAllBooks")]
+        [ProducesResponseType(typeof(IEnumerable<Book>),StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult GetAllBooks()
         {
-            _logger.Log("GetAllBooks Called");
-            return Ok(_bookRepository.GetAll());
-
+            var books = _bookRepository.GetAll();
+            if (books != null && books.Any())
+                return Ok(books);
+            else
+                return NoContent();
         }
 
         [HttpGet]
         [Route("GetBookById/{id}")]
+        [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult GetBookById(int id)
         {
-            return Ok(_bookRepository.GetById(id));
+            var book = _bookRepository.GetById(id);
+            if (book != null)
+                return Ok(book);
+            else
+                return NoContent();
         }
     }
 }
