@@ -1,5 +1,7 @@
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using NLog.Web;
 
 namespace ReaderSphere
 {
@@ -14,6 +16,9 @@ namespace ReaderSphere
             Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                }).ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                }).UseNLog();
     }
 }

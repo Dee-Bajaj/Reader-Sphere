@@ -1,6 +1,7 @@
 ﻿using DataAccess.Models;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using ProjectSettings;
 
 namespace ReaderSphere.Controllers
 {
@@ -9,9 +10,11 @@ namespace ReaderSphere.Controllers
     public class BookController : ControllerBase
     {
         private IGenericReadersphereRepository<Book> _bookRepository;
-        public BookController(IGenericReadersphereRepository<Book> genericReadersphereRepository)
+        private readonly IAppLogger _logger;
+        public BookController(IGenericReadersphereRepository<Book> genericReadersphereRepository, IAppLogger logger)
         {
             _bookRepository = genericReadersphereRepository;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -19,20 +22,16 @@ namespace ReaderSphere.Controllers
         [Route("GetAllBooks")]
         public IActionResult GetAllBooks()
         {
-            if (ModelState.IsValid)
-                return Ok(_bookRepository.GetAll());
-            else
-                return BadRequest();
+            _logger.Log("GetAllBooks Called");
+            return Ok(_bookRepository.GetAll());
+
         }
 
         [HttpGet]
-        [Route("GetBookById")]
+        [Route("GetBookById/{id}")]
         public IActionResult GetBookById(int id)
         {
-            if (ModelState.IsValid)
-                return Ok(_bookRepository.GetById(id));
-            else
-                return BadRequest();
+            return Ok(_bookRepository.GetById(id));
         }
     }
 }

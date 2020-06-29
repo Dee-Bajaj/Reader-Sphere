@@ -1,10 +1,11 @@
-using DataAccess;
+﻿using DataAccess;
 using DataAccess.Models;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using ProjectSettings;
 
@@ -21,12 +22,13 @@ namespace ReaderSphere
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<IGenericReadersphereRepository<Book>, ReaderDataRepository<Book>>();
-            services.AddSingleton<IGenericReadersphereRepository<Author>, ReaderDataRepository<Author>>();
-            services.AddSingleton<IGenericReadersphereRepository<BookAuthor>, ReaderDataRepository<BookAuthor>>();
-            services.AddSingleton<IGenericReadersphereRepository<UserReview>, ReaderDataRepository<UserReview>>();
-            services.AddSingleton<IConnections,Connections>();
-            services.AddSingleton<ReaderSphereContext>();
+            services.TryAddSingleton<IGenericReadersphereRepository<Book>, ReaderDataRepository<Book>>();
+            services.TryAddSingleton<IGenericReadersphereRepository<Author>, ReaderDataRepository<Author>>();
+            services.TryAddSingleton<IGenericReadersphereRepository<BookAuthor>, ReaderDataRepository<BookAuthor>>();
+            services.TryAddSingleton<IGenericReadersphereRepository<UserReview>, ReaderDataRepository<UserReview>>();
+            services.TryAddSingleton<IConnections, Connections>();
+            services.TryAddSingleton<ReaderSphereContext>();
+            services.TryAddSingleton<IAppLogger, AppLogger>();
             services.AddHealthChecks().AddCheck<DBHealthCheckProvider>("Database health check");
         }
 
@@ -37,7 +39,7 @@ namespace ReaderSphere
                 app.UseDeveloperExceptionPage();
             }
 
-           // app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -46,9 +48,9 @@ namespace ReaderSphere
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHealthChecks("");
-                endpoints.MapControllerRoute( 
+                endpoints.MapControllerRoute(
                     name: "default",
-                    pattern : "{controller}/{action}/{id?}"
+                    pattern: "{controller}/{action}/{id?}"
                     );
             });
         }

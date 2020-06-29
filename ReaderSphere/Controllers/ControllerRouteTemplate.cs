@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
+﻿using Microsoft.AspNetCore.Mvc.Routing;
 using System;
 
 namespace ReaderSphere.Controllers
@@ -7,11 +6,8 @@ namespace ReaderSphere.Controllers
     public class ControllerRouteTemplateAttribute : Attribute, IRouteTemplateProvider
     {
         public string Template => "api/[controller]";
-        public int? Order => 1 ;
+        public int? Order => 1;
         public string Name { get; set; }
     }
-    public class BaseController<T> : ControllerBase
-    {
 
-    }
 }
