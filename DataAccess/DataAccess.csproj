@@ -21,4 +21,5 @@
     <ProjectReference Include="..\ProjectSettings\ProjectSettings.csproj" />
   </ItemGroup>
 
+</Project>
 
