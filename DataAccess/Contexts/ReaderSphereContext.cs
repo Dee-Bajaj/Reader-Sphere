@@ -1,4 +1,4 @@
-﻿using DataAccess.Models;
+using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using ProjectSettings;
 
@@ -6,12 +6,12 @@ namespace DataAccess
 {
     public partial class ReaderSphereContext : DbContext
     {
+
         private readonly IConnections _connections;
         public ReaderSphereContext(IConnections connections)
         {
             _connections = connections;
         }
-
 
         public virtual DbSet<Author> Author { get; set; }
         public virtual DbSet<Book> Book { get; set; }
