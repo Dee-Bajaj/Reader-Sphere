@@ -1,18 +1,16 @@
-﻿using System;
+using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using ProjectSettings;
 
 namespace DataAccess
 {
     public partial class ReaderSphereContext : DbContext
     {
-        public ReaderSphereContext()
-        {
-        }
 
-        public ReaderSphereContext(DbContextOptions<ReaderSphereContext> options)
-            : base(options)
+        private readonly IConnections _connections;
+        public ReaderSphereContext(IConnections connections)
         {
+            _connections = connections;
         }
 
         public virtual DbSet<Author> Author { get; set; }
@@ -24,8 +22,7 @@ namespace DataAccess
         {
             if (!optionsBuilder.IsConfigured)
             {
-//warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=localhost;Database=ReaderSphere;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(_connections.DefaultConnection);
             }
         }
 

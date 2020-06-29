@@ -1,45 +1,86 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using ProjectSettings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DataAccess
+namespace DataAccess.Repositories
 {
     public class ReaderDataRepository<T> : IGenericReadersphereRepository<T> where T : class
     {
-        private ReaderSphereContext  _context = null;
+        private readonly ReaderSphereContext _context;
         private DbSet<T> _dbSet = null;
-        public ReaderDataRepository()
+        private readonly IAppLogger _appLogger;
+        public ReaderDataRepository(ReaderSphereContext readerSphereContext, IAppLogger appLogger)
         {
-            _context = new ReaderSphereContext();
+            _context = readerSphereContext;
             _dbSet = _context.Set<T>();
+            _appLogger = appLogger;
         }
         public void Add(T obj)
         {
-            _dbSet.Add(obj);
-            _context.SaveChanges();
+            try
+            {
+                _dbSet.Add(obj);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _appLogger.Log("Exception caught at ReaderDataRepository.Add", ex);
+            }
         }
 
         public void Delete(T obj)
         {
-            _dbSet.Remove(obj);
-            _context.SaveChanges();
-
+            try
+            {
+                _dbSet.Remove(obj);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _appLogger.Log("Exception caught at ReaderDataRepository.Delete", ex);
+            }
         }
 
         public IEnumerable<T> GetAll()
         {
-            return _dbSet.ToList();
+            try
+            {
+                return _dbSet.ToList();
+            }
+            catch (Exception ex)
+            {
+                _appLogger.Log("Exception caught at ReaderDataRepository.GetAll", ex);
+                return null;
+            }
+
         }
 
         public T GetById(int id)
         {
-            return _dbSet.Find(id);
+            try
+            {
+                return _dbSet.Find(id);
+            }
+            catch (Exception ex)
+            {
+                _appLogger.Log("Exception caught at ReaderDataRepository.GetById", ex);
+                return null;
+            }
         }
 
         public void Update(T obj)
         {
-            _dbSet.Update(obj);
-            _context.SaveChanges();
+            try
+            {
+                _dbSet.Update(obj);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _appLogger.Log("Exception caught at ReaderDataRepository.Update", ex);
+            }
         }
     }
 }
