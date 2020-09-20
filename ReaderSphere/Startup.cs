@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using ProjectSettings;
 
 namespace ReaderSphere
@@ -30,6 +31,16 @@ namespace ReaderSphere
             services.TryAddSingleton<ReaderSphereContext>();
             services.TryAddSingleton<IAppLogger, AppLogger>();
             services.AddHealthChecks().AddCheck<DBHealthCheckProvider>("Database health check");
+            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Book Review API",
+                    Description = "A simple example ASP.NET Core Web API",
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -40,7 +51,11 @@ namespace ReaderSphere
             }
 
             // app.UseHttpsRedirection();
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Book Review API V1");
+            });
             app.UseRouting();
 
             //app.UseAuthorization();

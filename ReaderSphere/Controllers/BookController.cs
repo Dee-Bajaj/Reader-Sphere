@@ -11,6 +11,7 @@ namespace ReaderSphere.Controllers
 {
     [ApiController]
     [ControllerRouteTemplate]
+    [Produces("application/json")]
     public class BookController : ControllerBase
     {
         private IGenericReadersphereRepository<Book> _bookRepository;
