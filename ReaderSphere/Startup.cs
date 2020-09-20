@@ -30,6 +30,8 @@ namespace ReaderSphere
             services.TryAddSingleton<IConnections, Connections>();
             services.TryAddSingleton<ReaderSphereContext>();
             services.TryAddSingleton<IAppLogger, AppLogger>();
+            services.TryAddSingleton<IBookService, BookService>();
+            services.TryAddSingleton<IBookRepository, BookRepository>();
             services.AddHealthChecks().AddCheck<DBHealthCheckProvider>("Database health check");
             services.AddSwaggerGen();
             services.AddSwaggerGen(c =>

@@ -43,7 +43,7 @@ namespace DataAccess.Repositories
             }
         }
 
-        public IEnumerable<T> GetAll()
+        public List<T> GetAll()
         {
             try
             {

@@ -7,7 +7,7 @@ namespace DataAccess.Repositories
         void Add(T obj);
         void Update(T obj);
         void Delete(T obj);
-        IEnumerable<T> GetAll();
+        List<T> GetAll();
         T GetById(int id);
     }
 }

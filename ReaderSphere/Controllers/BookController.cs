@@ -1,10 +1,8 @@
-using DataAccess.Models;
-using DataAccess.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
+using Models;
 using ProjectSettings;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace ReaderSphere.Controllers
@@ -14,35 +12,39 @@ namespace ReaderSphere.Controllers
     [Produces("application/json")]
     public class BookController : ControllerBase
     {
-        private IGenericReadersphereRepository<Book> _bookRepository;
+        private IBookService _bookService;
         private readonly IAppLogger _logger;
-        public BookController(IGenericReadersphereRepository<Book> genericReadersphereRepository, IAppLogger logger)
+        public BookController(IBookService bookService, IAppLogger logger)
         {
-            _bookRepository = genericReadersphereRepository;
+            _bookService = bookService;
             _logger = logger;
         }
 
         [HttpGet]
         [Route("~/api")]
         [Route("GetAllBooks")]
-        [ProducesResponseType(typeof(IEnumerable<Book>),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BookInfomationResponse),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult GetAllBooks()
         {
-            var books = _bookRepository.GetAll();
-            if (books != null && books.Any())
+            var books = _bookService.GetAllBooks();
+            if (books?.Books?.Any() == true)
                 return Ok(books);
             else
+            {
+                _logger.Log("No books found");
                 return NoContent();
+            }
+                
         }
 
         [HttpGet]
-        [Route("GetBookById/{id}")]
-        [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
+        [Route("GetBookById/{title}")]
+        [ProducesResponseType(typeof(BookInfomationResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult GetBookById(int id)
+        public IActionResult GetBookByTitle(string title)
         {
-            var book = _bookRepository.GetById(id);
+            var book = _bookService.GetBookByTitle(title);
             if (book != null)
                 return Ok(book);
             else
