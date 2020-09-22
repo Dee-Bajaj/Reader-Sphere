@@ -1,5 +1,4 @@
 using DataAccess;
-using DataAccess.Models;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ProjectSettings;
+using Models;
 
 namespace ReaderSphere
 {

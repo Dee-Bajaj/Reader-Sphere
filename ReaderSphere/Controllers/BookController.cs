@@ -38,15 +38,15 @@ namespace ReaderSphere.Controllers
                 
         }
 
-        [HttpGet]
-        [Route("GetBookById/{title}")]
+        [HttpPost]
+        [Route("GetSelectedBooks")]
         [ProducesResponseType(typeof(BookInfomationResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult GetBookByTitle(string title)
+        public IActionResult GetBookByTitle(FindBookRequest findBookRequest)
         {
-            var book = _bookService.GetBookByTitle(title);
-            if (book != null)
-                return Ok(book);
+            var bookInfomationResponse = _bookService.FindBooks(findBookRequest);
+            if (bookInfomationResponse != null)
+                return Ok(bookInfomationResponse);
             else
                 return NoContent();
         }

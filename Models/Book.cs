@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataAccess.Models
+namespace Models
 {
     public partial class Book
     {

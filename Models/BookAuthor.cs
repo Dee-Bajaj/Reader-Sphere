@@ -1,4 +1,4 @@
-namespace DataAccess.Models
+namespace Models
 {
     public partial class BookAuthor
     {

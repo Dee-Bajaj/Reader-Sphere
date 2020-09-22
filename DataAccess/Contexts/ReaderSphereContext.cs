@@ -1,4 +1,4 @@
-using DataAccess.Models;
+using Models;
 using Microsoft.EntityFrameworkCore;
 using ProjectSettings;
 

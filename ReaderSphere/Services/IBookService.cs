@@ -5,6 +5,6 @@ namespace ReaderSphere
     public interface IBookService
     {
         BookInfomationResponse GetAllBooks();
-        BookInfomationResponse GetBookByTitle(string title);
+        BookInfomationResponse FindBooks(FindBookRequest findBookRequest);
     }
 }

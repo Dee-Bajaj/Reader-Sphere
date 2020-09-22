@@ -33,18 +33,17 @@ namespace ReaderSphere
             }
             catch(Exception ex)
             {
-                _logger.Log("Exception caught at BookService-GetAllBooks", ex);
+                _logger.Log("Exception caught at BookService.GetAllBooks", ex);
             }
             return bookInfomationResponse;
         }
 
-        public BookInfomationResponse GetBookByTitle(string title)
+        public BookInfomationResponse FindBooks(FindBookRequest findBookRequest)
         {
             BookInfomationResponse bookInfomationResponse = null;
             try
             {
-                var filteredTitle = title.Trim();
-                var books =_bookRepository.GetBookByTitle(filteredTitle);
+                var books =_bookRepository.FindBooks(findBookRequest);
                 if(books?.Any() ?? false)
                 {
                     bookInfomationResponse = new BookInfomationResponse
@@ -56,7 +55,7 @@ namespace ReaderSphere
             }
             catch (Exception ex)
             {
-                _logger.Log("Exception caught at BookService-GetBookByTitle", ex);
+                _logger.Log("Exception caught at BookService.GetBookByTitle", ex);
             }
             return bookInfomationResponse;
         }
