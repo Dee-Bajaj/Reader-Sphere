@@ -4,7 +4,7 @@ namespace DataAccess.Repositories
 {
     public interface IGenericReadersphereRepository<T> where T : class
     {
-        void Add(T obj);
+        T Add(T obj);
         void Update(T obj);
         void Delete(T obj);
         List<T> GetAll();

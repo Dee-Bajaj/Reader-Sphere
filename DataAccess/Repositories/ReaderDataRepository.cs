@@ -17,16 +17,18 @@ namespace DataAccess.Repositories
             _dbSet = _context.Set<T>();
             _appLogger = appLogger;
         }
-        public void Add(T obj)
+        public T Add(T obj)
         {
             try
             {
                 _dbSet.Add(obj);
                 _context.SaveChanges();
+                return obj;
             }
             catch (Exception ex)
             {
                 _appLogger.Log("Exception caught at ReaderDataRepository.Add", ex);
+                return null;
             }
         }
 

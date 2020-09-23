@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -21,6 +22,7 @@ namespace Models
         public decimal? Price { get; set; }
         public DateTime? PublishYear { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<BookAuthor> BookAuthor { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace ReaderSphere.Controllers
         [HttpGet]
         [Route("~/api")]
         [Route("GetAllBooks")]
-        [ProducesResponseType(typeof(BookInfomationResponse),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BookInfomation),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult GetAllBooks()
         {
@@ -32,7 +32,6 @@ namespace ReaderSphere.Controllers
                 return Ok(books);
             else
             {
-                _logger.Log("No books found");
                 return NoContent();
             }
                 
@@ -40,13 +39,38 @@ namespace ReaderSphere.Controllers
 
         [HttpPost]
         [Route("GetSelectedBooks")]
-        [ProducesResponseType(typeof(BookInfomationResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BookInfomation), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult GetBookByTitle(FindBookRequest findBookRequest)
+        public IActionResult GetSelectedBooks(FindBookRequest findBookRequest)
         {
             var bookInfomationResponse = _bookService.FindBooks(findBookRequest);
             if (bookInfomationResponse != null)
                 return Ok(bookInfomationResponse);
+            else
+                return NoContent();
+        }
+
+        [HttpGet]
+        [Route("GetBookById")]
+        [ProducesResponseType(typeof(BookInfo), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult GetBookById(int id)
+        {
+            var book = _bookService.GetBookById(id);
+            if (book != null)
+                return Ok(book);
+            else
+                return NoContent();
+        }
+
+        [HttpPost]
+        [Route("AddBook")]
+        [ProducesResponseType(typeof(AddBookResponse), StatusCodes.Status200OK)]
+        public IActionResult AddBook(AddBookRequest addBookRequest)
+        {
+            var addBookResponse = _bookService.AddBook(addBookRequest);
+            if (addBookResponse != null)
+                return Ok(addBookResponse);
             else
                 return NoContent();
         }
